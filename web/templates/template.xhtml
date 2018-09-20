@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:view encoding="ISO-8859-1" contentType="text/html">
+        <h:head>
+            <title><ui:insert name="titulo"></ui:insert></title>
+            <h:outputStylesheet library="css" name="estilos.css"/>
+            <h:outputScript library="js" name="scripts.js"/>
+        </h:head>
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" header="Sistema desenvolvido para a PC2"
+                          style="text-align: center">
+                <h:form id="menu">
+                    <p:megaMenu>
+                        <p:menuitem value="Inicio" url="/index.xhtml" icon="ui-icon-home"/>
+                        <p:submenu label="Cadastros">
+                            <p:column>
+                                <p:submenu label="Pricipal">
+                                    <p:menuitem action="#{controleCidade.listar()}"
+                                                value="Manutenção de Cidades"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleEstado.listar()}"
+                                                value="Manutenção de Estados"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controlePais.listar()}"
+                                                value="Manutenção de Paises"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleCategoria.listar()}"
+                                                value="Manutenção de Categorias"
+                                                ajax="false"/>
+                                </p:submenu>
+                            </p:column>
+                        </p:submenu>
+                    </p:megaMenu>
+                </h:form>              
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <ui:insert name="conteudo">
+
+                </ui:insert>
+            </p:layoutUnit>
+            <ui:insert name="dialogos">
+
+            </ui:insert>
+            <p:layoutUnit position="south">
+                <ui:include src="ajaxstatus.xhtml"/>
+                <div align="center">Tiago Dellinghausen Lopes</div>
+            </p:layoutUnit>
+        </p:layout>
+    </f:view>
+</html>
