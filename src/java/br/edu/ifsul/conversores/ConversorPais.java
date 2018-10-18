@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
 @FacesConverter(value = "conversorPais")
 public class ConversorPais implements Converter, Serializable {
     
-    @PersistenceContext(unitName = "PC2_Teste_WebPU")
+    @PersistenceContext(unitName = "PC2_Teste_WebPU2")
     private EntityManager em;    
 
     @Override

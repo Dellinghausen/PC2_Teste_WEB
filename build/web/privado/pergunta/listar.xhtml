@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Manutenção de Perguntas</ui:define>
+        <ui:define name="conteudo">
+            <h:form id='formListagem'>
+                <p:growl/>
+                <p:commandButton value="Novo" actionListener="#{controlePergunta.novo()}"
+                                 icon="ui-icon-plus" oncomplete="PF('dlg').show();" update="formEdicao"/>
+                <p:panelGrid columns="11">
+                    <p:outputLabel value="Ordem:"/>
+                    <p:selectOneMenu value='#{controlePergunta.dao.ordem}'>
+                        <f:selectItem itemLabel="ID" itemValue="id"/>
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <p:ajax update="listagem"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Filtro:"/>
+                    <p:inputText value='#{controlePergunta.dao.filtro}' size='15'>
+                        <p:ajax update="listagem" event="keyup"/>
+                    </p:inputText>
+                    <p:commandButton value="Filtrar" update="listagem" icon="ui-icon-search"/>
+                    <p:outputLabel value="Resultados por página: "/>
+                    <p:inputNumber value='#{controlePergunta.dao.maximoObjetos}' decimalPlaces="0" decimalSeparator="" thousandSeparator=""/>
+                    <p:commandButton value="Primeiro" actionListener="#{controlePergunta.dao.primeiro()}" icon="ui-icon-seek-first" update="listagem"/>
+                    <p:commandButton value="Anterior" actionListener="#{controlePergunta.dao.anterior()}" icon="ui-icon-seek-prev" update="listagem"/>
+                    <p:commandButton value="Proximo" actionListener="#{controlePergunta.dao.proximo()}" icon="ui-icon-seek-next" update="listagem"/>
+                    <p:commandButton value="Ultimo" actionListener="#{controlePergunta.dao.ultimo()}" icon="ui-icon-seek-end" update="listagem"/>
+                </p:panelGrid>
+                <p:dataTable value="#{controlePergunta.dao.listaObjetos}" var="obj" id='listagem'>
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controlePergunta.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Pergunta">
+                        <p:outputLabel value="#{obj.pergunta}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton actionListener="#{controlePergunta.editar(obj.id)}"
+                                             icon="ui-icon-pencil" 
+                                             title="Editar" 
+                                             oncomplete="PF('dlg').show();" 
+                                             update="formEdicao"/>
+                            <p:commandButton icon="ui-icon-trash" actionListener="#{controlePergunta.remover(obj.id)}" update="formListagem" title="Remover">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <div align="center">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </div>
+                            </p:confirmDialog>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog widgetVar="dlg" header="Edição de Pergunta" modal="true" resizable="false" width="60%" height="100%" position="top">
+                <h:form id="formEdicao">
+                    <p:growl id="growl"/>
+                    <p:tabView id="tab">
+                        <p:tab title="Dados da Pergunta">
+                            <div align="center">
+                                <p:panelGrid columns="2">
+                                    <f:facet name="footer">
+                                        <div align="center">
+                                            <p:commandButton value="Salvar"
+                                                             icon="ui-icon-disk"
+                                                             actionListener="#{controlePergunta.salvar()}"
+                                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                             update=":formEdicao :formListagem"/>
+                                        </div>
+                                    </f:facet>
+                                    <p:outputLabel value="ID"/>
+                                    <p:inputText value="#{controlePergunta.objeto.id}" readonly="true" size="5"/>
+                                    <p:outputLabel value="Pergunta" for="txtPergunta"/>
+                                    <p:inputTextarea id="txtPergunta" value="#{controlePergunta.objeto.pergunta}"/>
+                                    <p:outputLabel value="Quantidade de escolhas" for="txtQuantidade"/>
+                                    <p:inputText id="txtQuantidade" value="#{controlePergunta.objeto.quantidade_escolhas}" maxlength="1" size="2" type="number"/>
+                                    <p:outputLabel value="Categoria" for="selectCategoria"/>
+                                    <p:selectOneMenu id="selectCategoria" value="#{controlePergunta.objeto.categoria}">
+                                        <f:converter converterId="conversorCategoria"/>
+                                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
+                                        <f:selectItems value="#{controlePergunta.daoCategoria.listaTodos}" var="c" itemLabel="#{c.nome}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Questionario" for="selectQuestionario"/>
+                                    <p:selectOneMenu id="selectQuestionario" value="#{controlePergunta.objeto.questionario}">
+                                        <f:converter converterId="conversorQuestionario"/>
+                                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
+                                        <f:selectItems value="#{controlePergunta.daoQuestionario.listaTodos}" var="q" itemLabel="#{q.nome}"/>
+                                    </p:selectOneMenu>
+                                </p:panelGrid>
+                            </div>
+                        </p:tab>
+                        <p:tab title="Opções de resposta">
+
+                            <p:dataTable value="#{controlePergunta.objeto.possibilidadeResposta}" var="pos" rowIndexVar="idx" id="listaOpcaoResposta">
+                                <f:facet name="header">
+                                    <p:commandButton value="Nova Opção Resposta"
+                                                     actionListener="#{controlePergunta.novoOpcaoResposta()}"
+                                                     update=" :formOpcaoResposta"
+                                                     icon="ui-icon-plus"
+                                                     id="btnNovoOpcaoResposta"
+                                                     process="btnNovoOpcaoResposta"
+                                                     oncomplete="PF('dlgOpcaoResposta').show();"/>
+                                </f:facet>
+                                <f:facet name="footer">
+                                    <div align="center">
+                                        <p:commandButton value="Salvar"
+                                                         icon="ui-icon-disk"
+                                                         actionListener="#{controlePergunta.salvar()}"
+                                                         oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                         update=":formEdicao :formListagem"/>
+                                    </div>
+                                </f:facet>
+                                <p:column headerText="ID">
+                                    <p:outputLabel value="#{pos.id}"/>
+                                </p:column>
+                                <p:column headerText="Nome">
+                                    <p:outputLabel value="#{pos.opcao}"/>
+                                </p:column>
+                                <p:column headerText="Ações">
+                                    <div align="center">
+                                        <p:commandButton actionListener="#{controlePergunta.alterarOpcaoResposta(idx)}"
+                                                         icon="ui-icon-pencil"
+                                                         title="Editar" 
+                                                         oncomplete="PF('dlgOpcaoResposta').show();" 
+                                                         update="formOpcaoResposta"
+                                                         process="@this"/>
+                                        <p:commandButton actionListener="#{controlePergunta.removerOpcaoResposta(idx)}"
+                                                         icon="ui-icon-trash"
+                                                         title="Remover"
+                                                         update="listaOpcaoResposta :formEdicao:growl"
+                                                         process="@this">
+                                            <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <div align="center">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>                            
+                        </p:tab>
+                    </p:tabView>
+                    <ui:include src="/templates/ajaxstatus.xhtml"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog header="Edição de Opção de resposta" widgetVar="dlgOpcaoResposta" resizable="false" modal="true">
+                <h:form id="formOpcaoResposta">
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controlePergunta.salvarOpcaoResposta()}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlgOpcaoResposta').hide();}"
+                                                     update=":formEdicao:tab:listaOpcaoResposta formOpcaoResposta"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controlePergunta.opcaoResposta.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Nome" for="txtNome"/>
+                            <p:inputText id="txtNome" value="#{controlePergunta.opcaoResposta.opcao}" size="40" maxlength="40"/>
+                        </p:panelGrid>
+                    </div>
+                </h:form>                
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

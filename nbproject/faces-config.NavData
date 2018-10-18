@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
-    <Scope Scope="Project"/>
+    <Scope Scope="Project">
+        <Node id="privado/usuario/listar.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="index.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="loginerror.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="privado/questionario/listar.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="privado/categoria/listar.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="privado/dadosresposta/listar.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="privado/pergunta/listar.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="privado/cidade/listar.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="privado/pais/listar.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="login.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="privado/estudante/listar.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="privado/estado/listar.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="templates/ajaxstatus.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="templates/template.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="privado/necessidade/listar.xhtml" x="650" y="450" zoom="true"/>
+    </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

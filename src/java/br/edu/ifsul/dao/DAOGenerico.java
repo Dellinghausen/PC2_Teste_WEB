@@ -2,18 +2,18 @@ package br.edu.ifsul.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Tiago
+ * @param <TIPO>
  */
 public class DAOGenerico<TIPO> implements Serializable {
 
     private List<TIPO> listaObjetos;
-    @PersistenceContext(unitName = "PC2_Teste_WebPU")
+    @PersistenceContext(unitName = "PC2_Teste_WebPU2")
     protected EntityManager em;
     protected Class classePersistente;
     protected String ordem = "id";
@@ -34,7 +34,7 @@ public class DAOGenerico<TIPO> implements Serializable {
                 try {
                     Integer.parseInt(getFiltro());
                     where += " where " + getOrdem() + " = '" + getFiltro() + "' ";
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                 }
             } else {
                 where += " where upper(" + getOrdem() + ") like '" + getFiltro().toUpperCase() + "%' ";

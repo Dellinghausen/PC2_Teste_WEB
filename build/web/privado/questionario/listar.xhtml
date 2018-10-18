@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Manutenção de Questionarios</ui:define>
+        <ui:define name="conteudo">
+            <h:form id='formListagem'>
+                <p:growl/>
+                <p:commandButton value="Novo" actionListener="#{controleQuestionario.novo()}"
+                                 icon="ui-icon-plus" oncomplete="PF('dlg').show();" update="formEdicao"/>
+                <p:panelGrid columns="11">
+                    <p:outputLabel value="Ordem:"/>
+                    <p:selectOneMenu value='#{controleQuestionario.dao.ordem}'>
+                        <f:selectItem itemLabel="ID" itemValue="id"/>
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <p:ajax update="listagem"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Filtro:"/>
+                    <p:inputText value='#{controleQuestionario.dao.filtro}' size='15'>
+                        <p:ajax update="listagem" event="keyup"/>
+                    </p:inputText>
+                    <p:commandButton value="Filtrar" update="listagem" icon="ui-icon-search"/>
+                    <p:outputLabel value="Resultados por página: "/>
+                    <p:inputNumber value='#{controleQuestionario.dao.maximoObjetos}' decimalPlaces="0" decimalSeparator="" thousandSeparator=""/>
+                    <p:commandButton value="Primeiro" actionListener="#{controleQuestionario.dao.primeiro()}" icon="ui-icon-seek-first" update="listagem"/>
+                    <p:commandButton value="Anterior" actionListener="#{controleQuestionario.dao.anterior()}" icon="ui-icon-seek-prev" update="listagem"/>
+                    <p:commandButton value="Proximo" actionListener="#{controleQuestionario.dao.proximo()}" icon="ui-icon-seek-next" update="listagem"/>
+                    <p:commandButton value="Ultimo" actionListener="#{controleQuestionario.dao.ultimo()}" icon="ui-icon-seek-end" update="listagem"/>
+                </p:panelGrid>
+                <p:dataTable value="#{controleQuestionario.dao.listaObjetos}" var="obj" id='listagem'>
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleQuestionario.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton actionListener="#{controleQuestionario.editar(obj.id)}"
+                                             icon="ui-icon-pencil" 
+                                             title="Editar" 
+                                             oncomplete="PF('dlg').show();" 
+                                             update="formEdicao"/>
+                            <p:commandButton icon="ui-icon-trash" actionListener="#{controleQuestionario.remover(obj.id)}" update="formListagem" title="Remover">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <div align="center">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </div>
+                            </p:confirmDialog>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog widgetVar="dlg" header="Edição de Questionario" modal="true" resizable="false">
+                <h:form id="formEdicao">
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controleQuestionario.salvar()}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                     update=":formEdicao :formListagem"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controleQuestionario.objeto.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Nome" for="txtNome"/>
+                            <p:inputText id="txtNome" value="#{controleQuestionario.objeto.nome}" size="40" maxlength="40"/>
+                            <p:outputLabel value="Usuario" for="selectUsuario"/>
+                            <p:selectOneMenu id="selectUsuario" value="#{controleQuestionario.objeto.usuario}">
+                                <f:converter converterId="conversorUsuario"/>
+                                <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
+                                <f:selectItems value="#{controleQuestionario.daoUsuario.listaTodos}" var="u" itemLabel="#{u.nome}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </div>
+                    <ui:include src="/templates/ajaxstatus.xhtml"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
+

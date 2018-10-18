@@ -1,0 +1,262 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Manutenção de Estudantes</ui:define>
+        <ui:define name="conteudo">
+            <h:form id='formListagem'>
+                <p:growl/>
+                <p:commandButton value="Novo" actionListener="#{controleEstudante.novo()}"
+                                 icon="ui-icon-plus" oncomplete="PF('dlg').show();" update="formEdicao"/>
+                <p:panelGrid columns="11">
+                    <p:outputLabel value="Ordem:"/>
+                    <p:selectOneMenu value='#{controleEstudante.dao.ordem}'>
+                        <f:selectItem itemLabel="ID" itemValue="id"/>
+                        <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                        <p:ajax update="listagem"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Filtro:"/>
+                    <p:inputText value='#{controleEstudante.dao.filtro}' size='15'>
+                        <p:ajax update="listagem" event="keyup"/>
+                    </p:inputText>
+                    <p:commandButton value="Filtrar" update="listagem" icon="ui-icon-search"/>
+                    <p:outputLabel value="Resultados por página: "/>
+                    <p:inputNumber value='#{controleEstudante.dao.maximoObjetos}' decimalPlaces="0" decimalSeparator="" thousandSeparator=""/>
+                    <p:commandButton value="Primeiro" actionListener="#{controleEstudante.dao.primeiro()}" icon="ui-icon-seek-first" update="listagem"/>
+                    <p:commandButton value="Anterior" actionListener="#{controleEstudante.dao.anterior()}" icon="ui-icon-seek-prev" update="listagem"/>
+                    <p:commandButton value="Proximo" actionListener="#{controleEstudante.dao.proximo()}" icon="ui-icon-seek-next" update="listagem"/>
+                    <p:commandButton value="Ultimo" actionListener="#{controleEstudante.dao.ultimo()}" icon="ui-icon-seek-end" update="listagem"/>
+                </p:panelGrid>
+                <p:dataTable value="#{controleEstudante.dao.listaObjetos}" var="obj" id='listagem'>
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleEstudante.dao.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>
+                    <p:column headerText="Login">
+                        <p:outputLabel value="#{obj.login}"/>
+                    </p:column>
+                    <p:column headerText="Email">
+                        <p:outputLabel value="#{obj.email}"/>
+                    </p:column>
+                    <p:column headerText="Curso">
+                        <p:outputLabel value="#{obj.curso}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton actionListener="#{controleEstudante.editar(obj.id)}"
+                                             icon="ui-icon-pencil" 
+                                             title="Editar" 
+                                             oncomplete="PF('dlg').show();" 
+                                             update="formEdicao"/>
+                            <p:commandButton icon="ui-icon-trash" actionListener="#{controleEstudante.remover(obj.id)}" update="formListagem" title="Remover">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <div align="center">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </div>
+                            </p:confirmDialog>
+                        </div>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog widgetVar="dlg" header="Edição de Estudante" modal="true" resizable="false" width="60%" height="100%" position="top">
+                <h:form id="formEdicao">
+                    <p:growl id="growl"/>
+                    <p:tabView id="tab">
+                        <p:tab title="Dados Principais">
+                            <div align="center">
+                                <p:panelGrid columns="2">
+                                    <f:facet name="footer">
+                                        <div align="center">
+                                            <p:commandButton value="Salvar"
+                                                             icon="ui-icon-disk"
+                                                             actionListener="#{controleEstudante.salvar()}"
+                                                             oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                             update=":formEdicao :formListagem"/>
+                                        </div>
+                                    </f:facet>
+                                    <p:outputLabel value="ID"/>
+                                    <p:inputText value="#{controleEstudante.objeto.id}" readonly="true" size="5"/>
+                                    <p:outputLabel value="Nome" for="txtNome"/>
+                                    <p:inputText id="txtNome" value="#{controleEstudante.objeto.nome}" size="40" maxlength="40"/>                             
+                                    <p:outputLabel value="Data de nascimento" for="txtDataNascimento"/>
+                                    <p:calendar id="txtDataNascimento" value="#{controleEstudante.objeto.dataNascimento}" mask="true"
+                                                pattern="dd/MM/yyyy" navigator="true" size="10">
+                                        <f:converter converterId="converterCalendar"/>
+                                    </p:calendar>
+                                    <p:outputLabel value="Telefone" for="txtTelefone"/>
+                                    <p:inputMask id="txtTelefone" value="#{controleEstudante.objeto.telefone}"
+                                                 mask="(99)99999-9999" placeholder="Obrigatório" size="16"/>                            
+                                    <p:outputLabel value="Curso" for="txtCurso"/>
+                                    <p:inputText id="txtCurso" value="#{controleEstudante.objeto.curso}" size="40" maxlength="40"/> 
+                                    <p:outputLabel value="Telefone de Emergência" for="txtTelefoneEmergencia"/>
+                                    <p:inputMask id="txtTelefoneEmergencia" value="#{controleEstudante.objeto.telefoneEmergencia}"
+                                                 mask="(99)99999-9999" placeholder="Obrigatório" size="16"/>
+                                    <p:outputLabel value="CPF" for="txtCPF"/>
+                                    <p:inputMask id="txtCPF" value="#{controleEstudante.objeto.cpf}"
+                                                 mask="99999999999" placeholder="Obrigatório" size="14"/>
+                                    <p:outputLabel value="Login" for="txtLogin"/>
+                                    <p:inputText id="txtLogin" value="#{controleEstudante.objeto.login}" size="40" maxlength="40"/> 
+                                    <p:outputLabel value="Senha" for="txtSenha"/>
+                                    <p:inputText id="txtSenha" value="#{controleEstudante.objeto.senha}" size="40" maxlength="40"/> 
+                                    <p:outputLabel value="Email" for="txtEmail"/>
+                                    <p:inputText id="txtEmail" value="#{controleEstudante.objeto.email}" size="40" maxlength="40"/>
+                                    <p:outputLabel value="Cidade" for="selectCidade"/>
+                                    <p:selectOneMenu id="selectCidade" value="#{controleEstudante.objeto.cidade}">
+                                        <f:converter converterId="conversorCidade"/>
+                                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
+                                        <f:selectItems value="#{controleEstudante.daoCidade.listaTodos}" var="c" itemLabel="#{c.nome}"/>
+                                    </p:selectOneMenu>
+                          
+                                </p:panelGrid>
+                            </div>  
+                        </p:tab>
+                        <p:tab title="listaNecessidades">
+                            <p:dataTable value="#{controleEstudante.objeto.necessidade}" var="necessidadeespecial" rowIndexVar="idxNecessidade" id="listaNecessidades">
+                                <f:facet name="footer">
+                                    <div align="center">
+                                        <p:commandButton value="Salvar"
+                                                         icon="ui-icon-disk"
+                                                         actionListener="#{controleEstudante.salvar()}"
+                                                         oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                         update=":formEdicao :formListagem"/>
+                                    </div>
+                                </f:facet>
+                                <f:facet name="header">
+                                    <p:panelGrid columns="2">
+                                        <p:selectOneMenu value="#{controleEstudante.necessidade}" id="selectNecessidade">
+                                            <f:converter converterId="conversorNecessidade"/>
+                                            <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
+                                            <f:selectItems value="#{controleEstudante.daoNecessidadeEspecial.listaTodos}" var="necessidade" itemLabel="#{necessidade.nome}"/>
+                                        </p:selectOneMenu>
+                                        <p:commandButton value="Adicionar"
+                                                         icon="ui-icon-plus"
+                                                         actionListener="#{controleEstudante.adicionarNecessidade()}"
+                                                         process="btnAdicionarNecessidade selectNecessidade"
+                                                         update="listaNecessidades :formEdicao"
+                                                         id="btnAdicionarNecessidade"/>
+                                    </p:panelGrid>
+                                </f:facet>
+                                <p:column headerText="Nome">
+                                    <p:outputLabel value="#{necessidadeespecial.nome}"/>
+                                </p:column>
+                                <p:column headerText="Necessidades Especiais">
+                                    <div align="center">
+                                        <p:commandButton icon="ui-icon-trash" actionListener="#{controleEstudante.removerNecessidade(idxAutor)}" update="listaNecessidades :formEdicao:growl" title="Remover">
+                                            <p:confirm header="Confirmação" message="Confirma a remoção da necessidade especial?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <div align="center">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+                        <p:tab title="Ações Posteriores">
+
+                            <p:dataTable value="#{controleEstudante.objeto.acaoposterior}" var="acao" rowIndexVar="idx" id="listaAcoes">
+                                <f:facet name="header">
+                                    <p:commandButton value="Nova ação"
+                                                     actionListener="#{controleEstudante.novoAcao()}"
+                                                     update=" :formAcao"
+                                                     icon="ui-icon-plus"
+                                                     id="btnNovaAcao"
+                                                     process="btnNovaAcao"
+                                                     oncomplete="PF('dlgAcao').show();"/>
+                                </f:facet>
+                                <f:facet name="footer">
+                                    <div align="center">
+                                        <p:commandButton value="Salvar"
+                                                         icon="ui-icon-disk"
+                                                         actionListener="#{controleEstudante.salvar()}"
+                                                         oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                         update=":formEdicao :formListagem"/>
+                                    </div>
+                                </f:facet>
+                                <p:column headerText="ID">
+                                    <p:outputLabel value="#{acao.id}"/>
+                                </p:column>
+                                <p:column headerText="Titulo">
+                                    <p:outputLabel value="#{acao.titulo}"/>
+                                </p:column>
+                                <p:column headerText="Ações">
+                                    <div align="center">
+                                        <p:commandButton actionListener="#{controleEstudante.alterarAcao(idx)}"
+                                                         icon="ui-icon-pencil"
+                                                         title="Editar" 
+                                                         oncomplete="PF('dlgAcao').show();" 
+                                                         update="formAcao"
+                                                         process="@this"/>
+                                        <p:commandButton actionListener="#{controleEstudante.removerAcao(idx)}"
+                                                         icon="ui-icon-trash"
+                                                         title="Remover"
+                                                         update="listaAcoes :formEdicao:growl"
+                                                         process="@this">
+                                            <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                                        </p:commandButton>
+                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                            <div align="center">
+                                                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </div>
+                                        </p:confirmDialog>
+                                    </div>
+                                </p:column>
+                            </p:dataTable>                            
+                        </p:tab>
+                    </p:tabView>
+                    <ui:include src="/templates/ajaxstatus.xhtml"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog header="Edição de Ações posteriores" widgetVar="dlgAcao" resizable="false" modal="true">
+                <h:form id="formAcao">
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controleEstudante.salvarAcao()}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlgAcao').hide();}"
+                                                     update=":formEdicao:tab:listaAcoes formAcao"
+                                                     process="@form"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="ID"/>
+                            <p:inputText value="#{controleEstudante.acao.id}" readonly="true" size="5"/>
+                            <p:outputLabel value="Nome" for="txtNome"/>
+                            <p:inputText id="txtNome" value="#{controleEstudante.acao.titulo}" size="40" maxlength="40"/>
+                            <p:outputLabel value="Descrição" for="txtDescricao"/>
+                            <p:inputTextarea id="txtDescricao" value="#{controleEstudante.acao.descricao}"/>
+                            <p:outputLabel value="Data da ação" for="txtDataAcao"/>
+                            <p:calendar id="txtDataAcao" value="#{controleEstudante.acao.dataacao}" mask="true"
+                                        pattern="dd/MM/yyyy" navigator="true" size="10">
+                                <f:converter converterId="converterCalendar"/>
+                            </p:calendar>
+                        </p:panelGrid>
+                    </div>
+                </h:form>                
+            </p:dialog>
+            <ui:include src="/templates/ajaxstatus.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>
+

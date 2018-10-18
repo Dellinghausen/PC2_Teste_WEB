@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:postgresql://localhost:5432/PC2_TesteModelo"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="jdbc/pc2" object-type="user" pool-name="PC2_TesteModelo_postgresPool"/>
+    <jdbc-resource enabled="true" jndi-name="jdbc/pc2_2" object-type="user" pool-name="PC2_TesteModelo_postgresPool"/>
 </resources>
