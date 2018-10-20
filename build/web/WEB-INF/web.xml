@@ -64,7 +64,7 @@
          </auth-constraint>
     </security-constraint>
     <!-- Para toda a aplicação rodar em HTTPS -->
-    <security-constraint>
+   <!-- <security-constraint>
         <display-name>https</display-name>
         <web-resource-collection>
             <web-resource-name>https</web-resource-name>
@@ -79,7 +79,7 @@
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
-    </security-constraint>   
+    </security-constraint> -->  
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>PC2-Realm</realm-name>
