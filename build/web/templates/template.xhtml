@@ -4,8 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <f:view encoding="ISO-8859-1" contentType="text/html">
         <h:head>
             <title><ui:insert name="titulo"></ui:insert></title>
@@ -16,55 +15,71 @@
             <p:layoutUnit position="north" header="Sistema desenvolvido para a PC2"
                           style="text-align: center">
                 <h:form id="menu">
-                    <b:navBar brand="TA">
-                        <b:navbarLinks>
-                            <b:navLink value="Inicio" outcome="inicio"/>
-                            <b:dropMenu value="Cadastros" 
-                                        rendered="#{controleLogin.usuarioAutenticado != null}">
-                                <b:navCommandLink action="#{controleUsuario.listar()}"
-                                                  value="Manutenção de Usuarios"
-                                                  ajax="false"/>
-                                <b:navCommandLink action="#{controleEstudante.listar()}"
-                                                  value="Manutenção de Estudantes"
-                                                  ajax="false"/> 
-                                <b:navCommandLink action="#{controleCategoria.listar()}"
-                                                  value="Manutenção de Categorias"
-                                                  ajax="false"/> 
-                                <b:navCommandLink action="#{controleNecessidadeEspecial.listar()}"
-                                                  value="Manutenção de Necessidade Especial"
-                                                  ajax="false"/>
-                                <b:navCommandLink action="#{controleQuestionario.listar()}"
-                                                  value="Manutenção de Questionarios"
-                                                  ajax="false"/> 
-                                <b:navCommandLink action="#{controlePergunta.listar()}"
-                                                  value="Manutenção de Perguntas"
-                                                  ajax="false"/>   
-                                <b:navCommandLink action="#{controleDadosResposta.listar()}"
-                                                  value="Manutenção de Dados Resposta"
-                                                  ajax="false"/>
-                                <b:navCommandLink action="#{controleCidade.listar()}"
-                                                  value="Manutenção de Cidades"
-                                                  ajax="false"/> 
-                                <b:navCommandLink action="#{controleEstado.listar()}"
-                                                  value="Manutenção de Estados"
-                                                  ajax="false"/> 
-                                <b:navCommandLink action="#{controlePais.listar()}"
-                                                  value="Manutenção de Paises"
-                                                  ajax="false"/>
-                            </b:dropMenu>
-                            <b:dropMenu value="Usuario #{controleLogin.usuarioAutenticado != null ?
-                                                         controleLogin.usuarioAutenticado.nome : ''}">
-                                <b:navCommandLink value="Efetuar login"
-                                                  action="#{controleLogin.paginaLogin()}"
-                                                  ajax="false"
-                                                  rendered="#{controleLogin.usuarioAutenticado == null}"/>
-                                <b:navCommandLink value="Efetuar logout"
-                                                  action="#{controleLogin.efetuarLogout()}"
-                                                  ajax="false"
-                                                  rendered="#{controleLogin.usuarioAutenticado != null}"/>
-                            </b:dropMenu>
-                        </b:navbarLinks>
-                    </b:navBar>                    
+                    <p:megaMenu>
+                        <p:menuitem value="Inicio" url="/index.xhtml" icon="ui-icon-home"/>
+                        <p:submenu label="Cadastros" rendered="#{controleLogin.usuarioAutenticado != null}">
+                            <p:column>
+                                <p:submenu label="Pricipal">
+                                    <p:menuitem action="#{controleUsuario.listar()}"
+                                                value="Manutenção de Usuarios"
+                                                ajax="false"/>
+                                </p:submenu>
+                                <p:submenu label="Básicos">
+                                    <p:menuitem action="#{controleEstudante.listar()}"
+                                                value="Manutenção de Estudantes"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleCategoria.listar()}"
+                                                value="Manutenção de Categorias"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleNecessidadeEspecial.listar()}"
+                                                value="Manutenção de Necessidade Especial"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleQuestionario.listar()}"
+                                                value="Manutenção de Questionarios"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controlePergunta.listar()}"
+                                                value="Manutenção de Perguntas"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleDadosResposta.listar()}"
+                                                value="Manutenção de Dados Resposta"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleCidade.listar()}"
+                                                value="Manutenção de Cidades"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleEstado.listar()}"
+                                                value="Manutenção de Estados"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controlePais.listar()}"
+                                                value="Manutenção de Paises"
+                                                ajax="false"/>
+                                </p:submenu> 
+                            </p:column>
+                        </p:submenu>
+                        <p:submenu label="Questionario">  
+                            <p:column>  
+                                <p:submenu label="Responder">
+                                    <p:menuitem value="Responder"
+                                                action="#{controleResponder.listar()}"
+                                                ajax="false"/>
+                                </p:submenu>
+                            </p:column>
+                        </p:submenu>
+                        <p:submenu label="Usuario #{controleLogin.usuarioAutenticado != null ?
+                                                    controleLogin.usuarioAutenticado.nome : ''}">  
+                            <p:column>  
+                                <p:submenu label="Logins">
+                                    <p:menuitem value="Efetuar login"
+                                                action="#{controleLogin.paginaLogin()}"
+                                                ajax="false"
+                                                rendered="#{controleLogin.usuarioAutenticado == null}"/>
+                                    <p:menuitem value="Efetuar logout"
+                                                action="#{controleLogin.efetuarLogout()}"
+                                                ajax="false"
+                                                rendered="#{controleLogin.usuarioAutenticado != null}"/>  
+                                </p:submenu>
+                            </p:column>
+                        </p:submenu>
+                    </p:megaMenu>
                 </h:form>              
             </p:layoutUnit>
             <p:layoutUnit position="center">

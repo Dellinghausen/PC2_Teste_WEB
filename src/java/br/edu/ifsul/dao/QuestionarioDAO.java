@@ -13,5 +13,5 @@ public class QuestionarioDAO<TIPO> extends DAOGenerico<Questionario> implements 
     public QuestionarioDAO() {
         super();
         classePersistente = Questionario.class;
-    }
+    }   
 }

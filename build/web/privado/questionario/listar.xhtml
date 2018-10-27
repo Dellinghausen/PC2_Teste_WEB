@@ -81,12 +81,8 @@
                             <p:inputText value="#{controleQuestionario.objeto.id}" readonly="true" size="5"/>
                             <p:outputLabel value="Nome" for="txtNome"/>
                             <p:inputText id="txtNome" value="#{controleQuestionario.objeto.nome}" size="40" maxlength="40"/>
-                            <p:outputLabel value="Usuario" for="selectUsuario"/>
-                            <p:selectOneMenu id="selectUsuario" value="#{controleQuestionario.objeto.usuario}">
-                                <f:converter converterId="conversorUsuario"/>
-                                <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
-                                <f:selectItems value="#{controleQuestionario.daoUsuario.listaTodos}" var="u" itemLabel="#{u.nome}"/>
-                            </p:selectOneMenu>
+                            <p:outputLabel value="Usuario"/>
+                            <p:inputText value="#{controleQuestionario.logado.usuarioAutenticado.nome}" readonly="true" size="40"/>                            
                         </p:panelGrid>
                     </div>
                     <ui:include src="/templates/ajaxstatus.xhtml"/>

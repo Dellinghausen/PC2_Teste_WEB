@@ -8,6 +8,7 @@ import br.edu.ifsul.util.Util;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -24,6 +25,8 @@ public class ControleQuestionario implements Serializable {
     private Boolean editando;
     @EJB
     private UsuarioDAO<Usuario> daoUsuario;
+    @Inject
+    private ControleLogin logado;
 
     public ControleQuestionario() {
         editando = false;
@@ -59,6 +62,7 @@ public class ControleQuestionario implements Serializable {
     public void salvar() {
         try {
             if (objeto.getId() == null) {
+                objeto.setUsuario(logado.getUsuarioAutenticado());
                 dao.persist(objeto);
             } else {
                 dao.merge(objeto);
@@ -99,5 +103,13 @@ public class ControleQuestionario implements Serializable {
 
     public void setDaoUsuario(UsuarioDAO<Usuario> daoUsuario) {
         this.daoUsuario = daoUsuario;
+    }
+
+    public ControleLogin getLogado() {
+        return logado;
+    }
+
+    public void setLogado(ControleLogin logado) {
+        this.logado = logado;
     }
 }
