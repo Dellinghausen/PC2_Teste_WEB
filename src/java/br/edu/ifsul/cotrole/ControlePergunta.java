@@ -83,7 +83,7 @@ public class ControlePergunta implements Serializable {
     }
 
     public void alterarOpcaoResposta(int index) {
-        opcaoResposta = objeto.getPossibilidadeResposta().get(index);
+        opcaoResposta = objeto.getOpcaoResposta().get(index);
         novaOpcaoResposta = false;
     }
 

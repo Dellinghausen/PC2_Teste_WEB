@@ -85,6 +85,11 @@
                                     <p:inputTextarea id="txtPergunta" value="#{controlePergunta.objeto.pergunta}"/>
                                     <p:outputLabel value="Quantidade de escolhas" for="txtQuantidade"/>
                                     <p:inputText id="txtQuantidade" value="#{controlePergunta.objeto.quantidade_escolhas}" maxlength="1" size="2" type="number"/>
+                                    <p:outputLabel value="Informe se a pergunta é por extenso ou multipla escolha: " for="ativo"/>
+                                    <p:selectOneRadio id="ativo" value="#{controlePergunta.objeto.tipo}">
+                                        <f:selectItem itemLabel="Por extenso" itemValue="true" />
+                                        <f:selectItem itemLabel="Multipla escolha" itemValue="false" />
+                                    </p:selectOneRadio>
                                     <p:outputLabel value="Categoria" for="selectCategoria"/>
                                     <p:selectOneMenu id="selectCategoria" value="#{controlePergunta.objeto.categoria}">
                                         <f:converter converterId="conversorCategoria"/>

@@ -37,6 +37,7 @@ public class ControleResponder implements Serializable {
     private Questionario questionario;
     @EJB
     private PerguntaDAO<Pergunta> daoPergunta;
+    private Pergunta pergunta;
     @EJB
     private RespostaTextoDAO<RespostaTexto> daoRespostaTexto;
     private RespostaTexto respostaTexto;
@@ -56,35 +57,14 @@ public class ControleResponder implements Serializable {
         return "/privado/responder/listar?faces-redirect=true";
     }
 
-    public void novo() {
-        objeto = new DadosResposta();
-        editando = true;
-    }
-
-    public void editar(Integer id) {
+    public void salvarRespostaTexto() {
         try {
-            objeto = dao.getObjectById(id);
-            editando = true;
-        } catch (Exception e) {
-            br.edu.ifsul.util.Util.mensagemErro("Erro ao recuperar objeto: " + br.edu.ifsul.util.Util.getMensagemErro(e));
-        }
-    }
-
-    public void remover(Integer id) {
-        try {
-            objeto = dao.getObjectById(id);
-            dao.remover(objeto);
-        } catch (Exception e) {
-            br.edu.ifsul.util.Util.mensagemErro("Erro ao remover objeto: " + br.edu.ifsul.util.Util.getMensagemErro(e));
-        }
-    }
-
-    public void salvar() {
-        try {
-            if (objeto.getId() == null) {
-                dao.persist(objeto);
+            if (respostaTexto.getId() == null) {
+                respostaTexto.setDadosresposta(objeto);
+                respostaTexto.setPergunta(pergunta);
+                daoRespostaTexto.persist(respostaTexto);
             } else {
-                dao.merge(objeto);
+                daoRespostaTexto.merge(respostaTexto);
             }
             editando = false;
         } catch (Exception e) {
@@ -96,13 +76,22 @@ public class ControleResponder implements Serializable {
         objeto = dao.localizaPorAluno(logado.getUsuarioAutenticado().getId());
         return objeto.getId();
     }
-    
+
     public Questionario pegaQuestionarioPorUser() {
         objeto = dao.localizaPorAluno(logado.getUsuarioAutenticado().getId());
         questionario = objeto.getQuestionario();
         return questionario;
     }
 
+    public Boolean tipoResposta(Integer Quantidade) {
+        Boolean tipo;
+        if(Quantidade == 1){
+            tipo = Boolean.TRUE;
+        }else{
+            tipo = Boolean.FALSE;
+        };
+        return tipo;
+    }
 
     public DadosRespostaDAO<DadosResposta> getDao() {
         return dao;
@@ -198,6 +187,14 @@ public class ControleResponder implements Serializable {
 
     public void setDaoPergunta(PerguntaDAO<Pergunta> daoPergunta) {
         this.daoPergunta = daoPergunta;
+    }
+
+    public Pergunta getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
     }
 
 }

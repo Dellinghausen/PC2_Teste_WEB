@@ -18,7 +18,7 @@ public class PerguntaDAO<TIPO> extends DAOGenerico<Pergunta> implements Serializ
     @Override
     public Pergunta getObjectById(Object id) throws Exception {
         Pergunta obj = em.find(Pergunta.class, id);
-        obj.getPossibilidadeResposta().size();
+        obj.getOpcaoResposta().size();
         return obj;
     }
 }
