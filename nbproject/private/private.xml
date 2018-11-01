@@ -6,9 +6,12 @@
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/src/java/br/edu/ifsul/dao/QuestionarioDAO.java</file>
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/src/java/br/edu/ifsul/cotrole/ControleResponder.java</file>
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/src/java/br/edu/ifsul/cotrole/ControleQuestionario.java</file>
+            <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/web/privado/estudante/listar.xhtml</file>
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/src/java/br/edu/ifsul/dao/UsuarioDAO.java</file>
+            <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/web/login.xhtml</file>
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/web/privado/pergunta/listar.xhtml</file>
             <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/web/privado/responder/listar.xhtml</file>
+            <file>file:/C:/Users/Tiago/Documents/NetBeansProjects/PC2_Teste_WEB/src/java/br/edu/ifsul/cotrole/ControlePergunta.java</file>
         </group>
     </open-files>
 </project-private>

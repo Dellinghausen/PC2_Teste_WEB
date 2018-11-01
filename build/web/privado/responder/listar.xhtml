@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="titulo">Responder</ui:define>
+        <ui:define name="conteudo">
+            <h:form id='formListagem'>
+                <p:growl/> 
+                <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}" var="perguntas" id='listagem'>
+                    <p:column headerText="Pergunta">
+                        <p:tabView id="tab">
+                            <p:tab title="Responder">
+                                <div align="center">
+                                    <p:panelGrid columns="1">
+                                        <f:facet name="footer">
+                                            <div align="center">
+                                                <p:commandButton value="Salvar"
+                                                                 rendered="#{perguntas.tipo}"
+                                                                 icon="ui-icon-disk"
+                                                                 actionListener="#{controleResponder.salvarRespostaTexto()}"
+                                                                 oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                                 update=":formListagem"/>
+                                            </div>
+                                        </f:facet>
+                                        <div class="p-grid p-dir-col">
+                                            <div class="p-col">
+                                                <p:outputLabel value="#{perguntas.pergunta}"/>
+                                            </div>
+                                            <div class="p-col">
+                                                <p:inputTextarea value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150"  rendered="#{perguntas.tipo}"/>
+                                                <h:panelGrid columns="1" rendered="#{!perguntas.tipo}" style="margin-bottom:10px" cellpadding="5">
+                                                    <p:outputLabel for="escolha" value="Resposta:" />
+                                                    <p:selectOneRadio id="escolha" value="#{controleResponder.respostaEscolha.opcaoresposta}"  layout="grid" columns="3">
+                                                        <f:selectItems value="#{perguntas.opcaoResposta}" var="opcoes" itemLabel="#{opcoes}" itemValue="#{opcoes}"/>
+                                                    </p:selectOneRadio>
+                                                </h:panelGrid>
+                                                <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}"  var="perguntas" id='listagem'>
+
+                                                </p:dataTable>
+                                            </div>
+                                        </div> 
+                                    </p:panelGrid>
+                                </div>
+                            </p:tab>
+                        </p:tabView>
+                    </p:column>
+                </p:dataTable>                        
+            </h:form>
+        </ui:define>        
+    </ui:composition>
+</html>
+

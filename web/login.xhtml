@@ -8,25 +8,26 @@
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">Login do Sistema</ui:define>
         <ui:define name="conteudo">
-            <h:form>
+            <h:form >
                 <p:messages/>
-                <p:panelGrid columns="2" columnClasses="ui-grid-col-2, ui-grid-col-5"
-                    layout="grid" styleClass="ui-panelgrid-blank">
-                    <f:facet name="header">
-                        <p:outputLabel value="Login de Usuário"/>
-                    </f:facet>             
-                    <f:facet name="footer">
-                        <div align="center">
-                            <p:commandButton value="Efetuar login"
-                                             action="#{controleLogin.efetuarLogin()}"
-                                             ajax="false"/>
-                        </div>
-                    </f:facet>
-                    <p:outputLabel value="Login" for="txtLogin"/>
-                    <p:inputText id="txtLogin" value="#{controleLogin.login}"/>
-                    <p:outputLabel value="Senha" for="txtSenha"/>
-                    <p:password id="txtSenha" value="#{controleLogin.senha}"/>
-                </p:panelGrid>
+                <div align="center">
+                    <p:panelGrid columns="2">
+                        <f:facet name="header">
+                            <p:outputLabel value="Login de Usuário"/>
+                        </f:facet>         
+                        <p:outputLabel value="Login" for="txtLogin"/>
+                        <p:inputText id="txtLogin" value="#{controleLogin.login}"/>
+                        <p:outputLabel value="Senha" for="txtSenha"/>
+                        <p:password id="txtSenha" value="#{controleLogin.senha}"/>
+                        <f:facet name="footer">
+                            <div align="center">
+                                <p:commandButton value="Efetuar login"
+                                                 action="#{controleLogin.efetuarLogin()}"
+                                                 ajax="false"/>
+                            </div>
+                        </f:facet>                    
+                    </p:panelGrid>
+                </div>
             </h:form>
         </ui:define>
     </ui:composition>      
