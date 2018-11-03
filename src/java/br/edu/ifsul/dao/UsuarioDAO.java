@@ -2,13 +2,13 @@ package br.edu.ifsul.dao;
 
 import br.edu.ifsul.modelo.Usuario;
 import java.io.Serializable;
-import javax.ejb.Stateless;
+import javax.ejb.Stateful;
 import javax.persistence.Query;
 /**
  *
  * @author Tiago
  */
-@Stateless
+@Stateful
 public class UsuarioDAO<TIPO> extends DAOGenerico<Usuario> implements Serializable {
 
     public UsuarioDAO() {

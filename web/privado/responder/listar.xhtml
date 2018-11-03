@@ -7,31 +7,24 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">Responder</ui:define>
-        <ui:define name="conteudo">
-            <h:form id='formListagem'>
-                <p:growl/> 
+        <ui:define name="conteudo">            
+            <h:form id='formListagem'>               
                 <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}" var="perguntas" id='listagem'>
                     <p:column headerText="Pergunta">
-                        <p:tabView id="tab">
-                            <p:tab title="Responder">
-                                <div align="center">
-                                    <p:panelGrid columns="1">
-                                        <f:facet name="footer">
-                                            <div align="center">
-                                                <p:commandButton value="Salvar"
-                                                                 rendered="#{perguntas.tipo}"
-                                                                 icon="ui-icon-disk"
-                                                                 actionListener="#{controleResponder.salvarRespostaTexto()}"
-                                                                 oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
-                                                                 update=":formListagem"/>
-                                            </div>
-                                        </f:facet>
+                                <div align="center"> 
                                         <div class="p-grid p-dir-col">
                                             <div class="p-col">
-                                                <p:outputLabel value="#{perguntas.pergunta}"/>
+                                                <p:outputLabel value="#{perguntas.pergunta}" style="margin-right: 30px"/> 
+                                                <p:commandButton value="Salvar"
+                                                     rendered="#{perguntas.tipo}"
+                                                     actionListener="#{controleResponder.salvarRespostaTexto()}" 
+                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                     update=":formListagem" 
+                                                     icon="ui-icon-disk" />
                                             </div>
                                             <div class="p-col">
                                                 <p:inputTextarea value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150"  rendered="#{perguntas.tipo}"/>
+                                               
                                                 <h:panelGrid columns="1" rendered="#{!perguntas.tipo}" style="margin-bottom:10px" cellpadding="5">
                                                     <p:outputLabel for="escolha" value="Resposta:" />
                                                     <p:selectOneRadio id="escolha" value="#{controleResponder.respostaEscolha.opcaoresposta}"  layout="grid" columns="3">
@@ -41,12 +34,9 @@
                                                 <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}"  var="perguntas" id='listagem'>
 
                                                 </p:dataTable>
-                                            </div>
-                                        </div> 
-                                    </p:panelGrid>
+                                            </div>                                             
+                                        </div>                                     
                                 </div>
-                            </p:tab>
-                        </p:tabView>
                     </p:column>
                 </p:dataTable>                        
             </h:form>

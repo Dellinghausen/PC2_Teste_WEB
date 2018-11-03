@@ -24,16 +24,21 @@ public class ConversorEstado implements Converter, Serializable {
         if(value == null || value.equals("Selecione um registro")){
             return null;
         }
-        return em.find(Estado.class, Integer.parseInt(value));
+        
+        Estado retornoO = em.find(Estado.class, Integer.parseInt(value));
+        System.out.println("Objeto--->  "+retornoO);
+        return retornoO;
     }
 
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value == null){
             return null;
-        }
+        }        
         Estado obj = (Estado) value;
-        return obj.getId().toString();
+        String retornoS = obj.getId().toString();
+        System.out.println("String--->  "+retornoS);
+        return retornoS;
     }
     
 }

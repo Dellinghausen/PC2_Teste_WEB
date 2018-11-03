@@ -61,6 +61,11 @@ public class ControleLogin implements Serializable{
         }
         return "/index";
     }
+    
+    public Boolean usuarioAdministrador(){
+//        if(usuarioAutenticado.getPermissao().get(0).equals("");
+        return true;
+    }
 
     public Usuario getUsuarioAutenticado() {
         return usuarioAutenticado;
