@@ -21,6 +21,7 @@ public class EstudanteDAO<TIPO> extends DAOGenerico<Estudante> implements Serial
         Estudante obj = em.find(Estudante.class, id);
         obj.getNecessidade().size();
         obj.getAcaoposterior().size();
+        obj.getPermissao().size();
         return obj;
     }
 }

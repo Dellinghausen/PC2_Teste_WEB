@@ -111,7 +111,7 @@
                                     <p:outputLabel value="Login" for="txtLogin"/>
                                     <p:inputText id="txtLogin" value="#{controleEstudante.objeto.login}" size="40" maxlength="40"/> 
                                     <p:outputLabel value="Senha" for="txtSenha"/>
-                                    <p:inputText id="txtSenha" value="#{controleEstudante.objeto.senha}" size="40" maxlength="40"/> 
+                                    <p:password id="txtSenha" value="#{controleEstudante.objeto.senha}" size="40" maxlength="40"/> 
                                     <p:outputLabel value="Email" for="txtEmail"/>
                                     <p:inputText id="txtEmail" value="#{controleEstudante.objeto.email}" size="40" maxlength="40"/>
                                     <p:outputLabel value="Cidade" for="selectCidade"/>
@@ -124,7 +124,7 @@
                                 </p:panelGrid>
                             </div>  
                         </p:tab>
-                        <p:tab title="listaNecessidades">
+                        <p:tab title="Lista de Necessidades">
                             <p:dataTable value="#{controleEstudante.objeto.necessidade}" var="necessidadeespecial" rowIndexVar="idxNecessidade" id="listaNecessidades">
                                 <f:facet name="footer">
                                     <div align="center">

@@ -14,4 +14,4 @@ public class RespostaComEscolhaDAO<TIPO> extends DAOGenerico<RespostaComEscolha>
         super();
         classePersistente = RespostaComEscolha.class;
     }
-}
+} 

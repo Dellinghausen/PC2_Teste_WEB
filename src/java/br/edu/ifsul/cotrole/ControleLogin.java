@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @SessionScoped
 public class ControleLogin implements Serializable{
     private Usuario usuarioAutenticado;
+    private String permissaoLogado;
     @EJB
     private UsuarioDAO<Usuario> dao;
     private String login;
@@ -61,11 +62,6 @@ public class ControleLogin implements Serializable{
         }
         return "/index";
     }
-    
-    public Boolean usuarioAdministrador(){
-//        if(usuarioAutenticado.getPermissao().get(0).equals("");
-        return true;
-    }
 
     public Usuario getUsuarioAutenticado() {
         return usuarioAutenticado;
@@ -98,4 +94,13 @@ public class ControleLogin implements Serializable{
     public void setSenha(String senha) {
         this.senha = senha;
     }
+
+    public String getPermissaoLogado() {
+        return permissaoLogado;
+    }
+
+    public void setPermissaoLogado(String permissaoLogado) {
+        this.permissaoLogado = permissaoLogado;
+    }
+
 }

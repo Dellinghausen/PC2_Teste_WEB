@@ -11,7 +11,7 @@
             <h:outputStylesheet library="css" name="estilos.css"/>
             <h:outputScript library="js" name="scripts.js"/>
         </h:head>
-        <p:layout fullPage="true">
+        <p:layout style="background: url('../images/verdeBrasil.png') repeat !important;" fullPage="true">
             <p:layoutUnit position="north" header="Sistema desenvolvido para a PC2"
                           style="text-align: center">
                 <h:form id="menu">
@@ -55,7 +55,7 @@
                                 </p:submenu> 
                             </p:column>
                         </p:submenu>
-                        <p:submenu label="Questionario" rendered="#{controleLogin.usuarioAutenticado != null}">  
+                        <p:submenu label="Questionario" rendered="#{controleLogin.usuarioAutenticado == null}">  
                             <p:column>  
                                 <p:submenu label="Responder">
                                     <p:menuitem value="Responder"
