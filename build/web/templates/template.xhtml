@@ -55,7 +55,7 @@
                                 </p:submenu> 
                             </p:column>
                         </p:submenu>
-                        <p:submenu label="Questionario" rendered="#{controleLogin.usuarioAutenticado == null}">  
+                        <p:submenu label="Questionario" rendered="#{controleLogin.usuarioAutenticado != null}">  
                             <p:column>  
                                 <p:submenu label="Responder">
                                     <p:menuitem value="Responder"
