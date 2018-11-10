@@ -49,6 +49,7 @@ public class ControleResponder implements Serializable {
 
     public ControleResponder() {
         editando = true;
+         respostaTexto = new RespostaTexto();
 //        daoPergunta.setMaximoObjetos(1);
 //        objeto = dao.localizaPorAluno(logado.getUsuarioAutenticado().getId());
     }
@@ -60,7 +61,6 @@ public class ControleResponder implements Serializable {
     public void salvarRespostaTexto() {
         try {
             if (respostaTexto.getId() == null) {
-                respostaTexto = new RespostaTexto();
                 respostaTexto.setDadosresposta(objeto);
                 respostaTexto.setPergunta(pergunta);
                 daoRespostaTexto.persist(respostaTexto);

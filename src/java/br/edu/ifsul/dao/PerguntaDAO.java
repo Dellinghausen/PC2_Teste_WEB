@@ -1,5 +1,6 @@
 package br.edu.ifsul.dao;
 
+import br.edu.ifsul.modelo.OpcaoResposta;
 import br.edu.ifsul.modelo.Pergunta;
 import java.io.Serializable;
 import javax.ejb.Stateless;
@@ -19,6 +20,9 @@ public class PerguntaDAO<TIPO> extends DAOGenerico<Pergunta> implements Serializ
     public Pergunta getObjectById(Object id) throws Exception {
         Pergunta obj = em.find(Pergunta.class, id);
         obj.getOpcaoResposta().size();
+        for (OpcaoResposta o: obj.getOpcaoResposta()){
+            o.getRespostaEscolha().size();
+        }
         return obj;
     }
 }
