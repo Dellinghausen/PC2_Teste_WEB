@@ -17,13 +17,13 @@
                                                 <p:outputLabel value="#{perguntas.pergunta}" style="margin-right: 30px"/> 
                                                 <p:commandButton value="Salvar"
                                                      rendered="#{perguntas.tipo}"
-                                                     actionListener="#{controleResponder.salvarRespostaTexto()}" 
+                                                     actionListener="#{controleResponder.salvarRespostaTexto(perguntas)}" 
                                                      oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
                                                      update=":formListagem" 
                                                      icon="ui-icon-disk" />
                                             </div>
                                             <div class="p-col">
-                                                <p:inputTextarea value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150"  rendered="#{perguntas.tipo}"/>
+                                                <p:inputTextarea value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150" rendered="#{perguntas.tipo}"/>
                                                
                                                 <h:panelGrid columns="1" rendered="#{!perguntas.tipo}" style="margin-bottom:10px" cellpadding="5">
                                                     <p:outputLabel for="escolha" value="Resposta:" />

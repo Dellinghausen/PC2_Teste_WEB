@@ -58,11 +58,12 @@ public class ControleResponder implements Serializable {
         return "/privado/responder/listar?faces-redirect=true";
     }
 
-    public void salvarRespostaTexto() {
+    public void salvarRespostaTexto(Pergunta p) {
+        System.out.println("PERGUNTA------>>>>>>>>>  "+p);
         try {
             if (respostaTexto.getId() == null) {
                 respostaTexto.setDadosresposta(objeto);
-                respostaTexto.setPergunta(pergunta);
+                respostaTexto.setPergunta(p);
                 daoRespostaTexto.persist(respostaTexto);
             } else {
                 daoRespostaTexto.merge(respostaTexto);
