@@ -116,7 +116,7 @@
                                     <p:inputText id="txtEmail" value="#{controleEstudante.objeto.email}" size="40" maxlength="40"/>
                                     <p:outputLabel value="Cidade" for="selectCidade"/>
                                     <p:selectOneMenu id="selectCidade" value="#{controleEstudante.objeto.cidade}">
-                                        <f:converter converterId="conversorCidade"/>
+                                        <f:converter binding="#{conversorCidade}"/>
                                         <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                         <f:selectItems value="#{controleEstudante.daoCidade.listaTodos}" var="c" itemLabel="#{c.nome}"/>
                                     </p:selectOneMenu>
@@ -138,7 +138,7 @@
                                 <f:facet name="header">
                                     <p:panelGrid columns="2">
                                         <p:selectOneMenu value="#{controleEstudante.necessidade}" id="selectNecessidade">
-                                            <f:converter converterId="conversorNecessidade"/>
+                                            <f:converter binding="#{conversorNecessidade}"/>
                                             <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
                                             <f:selectItems value="#{controleEstudante.daoNecessidadeEspecial.listaTodos}" var="necessidade" itemLabel="#{necessidade.nome}"/>
                                         </p:selectOneMenu>

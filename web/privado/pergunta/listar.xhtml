@@ -92,13 +92,13 @@
                                     </p:selectOneRadio>
                                     <p:outputLabel value="Categoria" for="selectCategoria"/>
                                     <p:selectOneMenu id="selectCategoria" value="#{controlePergunta.objeto.categoria}">
-                                        <f:converter converterId="conversorCategoria"/>
+                                        <f:converter binding="#{conversorCategoria}"/>
                                         <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                         <f:selectItems value="#{controlePergunta.daoCategoria.listaTodos}" var="c" itemLabel="#{c.nome}"/>
                                     </p:selectOneMenu>
                                     <p:outputLabel value="Questionario" for="selectQuestionario"/>
                                     <p:selectOneMenu id="selectQuestionario" value="#{controlePergunta.objeto.questionario}">
-                                        <f:converter converterId="conversorQuestionario"/>
+                                        <f:converter binding="#{conversorQuestionario}"/>
                                         <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                         <f:selectItems value="#{controlePergunta.daoQuestionario.listaTodos}" var="q" itemLabel="#{q.nome}"/>
                                     </p:selectOneMenu>

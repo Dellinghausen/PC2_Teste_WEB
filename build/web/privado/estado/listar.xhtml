@@ -88,7 +88,7 @@
                             <p:inputText id="txtUF" value="#{controleEstado.objeto.uf}" size="3" maxlength="3"/>
                             <p:outputLabel value="Pais" for="selectPais"/>
                             <p:selectOneMenu id="selectPais" value="#{controleEstado.objeto.pais}">
-                                <f:converter converterId="conversorPais"/>
+                                <f:converter binding="#{conversorPais}"/>
                                 <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                 <f:selectItems value="#{controleEstado.daoPais.listaTodos}" var="p" itemLabel="#{p.nome}"/>
                             </p:selectOneMenu>

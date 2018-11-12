@@ -40,12 +40,12 @@
                     </p:column>
                     <p:column headerText="Estudante">
                         <p:outputLabel value="#{obj.estudante}">
-                        <f:converter converterId="conversorEstudante"/>
+                        <f:converter binding="#{conversorEstudante}"/>
                         </p:outputLabel>
                     </p:column>
                     <p:column headerText="Questionario">
                         <p:outputLabel value="#{obj.questionario}">
-                        <f:converter converterId="conversorQuestionario"/>
+                        <f:converter binding="#{conversorQuestionario}"/>
                         </p:outputLabel>
                     </p:column>
                     <p:column headerText="Ações">
@@ -88,13 +88,13 @@
                             <p:inputText value="#{controleDadosResposta.objeto.id}" readonly="true" size="5"/>
                             <p:outputLabel value="Estudante" for="selectEstudante"/>
                             <p:selectOneMenu id="selectEstudante" value="#{controleDadosResposta.objeto.estudante}">
-                                <f:converter converterId="conversorEstudante"/>
+                                <f:converter binding="#{conversorEstudante}"/>
                                 <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                 <f:selectItems value="#{controleDadosResposta.daoEstudante.listaTodos}" var="c" itemLabel="#{c.nome}"/>
                             </p:selectOneMenu>
                             <p:outputLabel value="Questionario" for="selectQuestionario"/>
                             <p:selectOneMenu id="selectQuestionario" value="#{controleDadosResposta.objeto.questionario}">
-                                <f:converter converterId="conversorQuestionario"/>
+                                <f:converter binding="#{conversorQuestionario}"/>
                                 <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
                                 <f:selectItems value="#{controleDadosResposta.daoQuestionario.listaTodos}" var="q" itemLabel="#{q.nome}"/>
                             </p:selectOneMenu>

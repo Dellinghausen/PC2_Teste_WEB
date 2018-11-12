@@ -2,10 +2,12 @@ package br.edu.ifsul.conversores;
 
 import br.edu.ifsul.modelo.Permissao;
 import java.io.Serializable;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -13,7 +15,9 @@ import javax.persistence.PersistenceContext;
  *
  * @author Tiago
  */
-@FacesConverter(value = "conversorPermissao")
+//@FacesConverter(value = "conversorPermissao")
+@Named(value = "conversorPermissao")
+@RequestScoped
 public class ConversorPermissao implements Serializable, Converter {
     
     @PersistenceContext(unitName = "PC2_Teste_WebPU2")

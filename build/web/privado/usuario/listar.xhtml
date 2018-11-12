@@ -112,7 +112,7 @@
                                 <f:facet name="header">
                                     <p:panelGrid columns="2">
                                         <p:selectOneMenu value="#{controleUsuario.permissao}" id="selectPermissao">
-                                            <f:converter converterId="conversorPermissao"/>
+                                            <f:converter binding="#{conversorPermissao}"/>
                                             <f:selectItem noSelectionOption="true" itemLabel="Selecione um registro"/>
                                             <f:selectItems value="#{controleUsuario.daoPermissao.listaTodos}" var="usu" itemLabel="#{usu.tipo}"/>
                                         </p:selectOneMenu>
