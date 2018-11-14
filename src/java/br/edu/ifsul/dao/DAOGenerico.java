@@ -18,7 +18,7 @@ public class DAOGenerico<TIPO> implements Serializable {
     protected Class classePersistente;
     protected String ordem = "id";
     protected String filtro = "";
-    protected Integer maximoObjetos = 2;
+    protected Integer maximoObjetos = 10;
     protected Integer posicaoAtual = 0;
     protected Integer totalObjetos = 0;
 

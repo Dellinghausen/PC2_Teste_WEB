@@ -49,7 +49,7 @@ public class ControleResponder implements Serializable {
 
     public ControleResponder() {
         editando = true;
-         respostaTexto = new RespostaTexto();
+        respostaTexto = new RespostaTexto();
 //        daoPergunta.setMaximoObjetos(1);
 //        objeto = dao.localizaPorAluno(logado.getUsuarioAutenticado().getId());
     }
@@ -59,7 +59,6 @@ public class ControleResponder implements Serializable {
     }
 
     public void salvarRespostaTexto(Pergunta p) {
-        System.out.println("PERGUNTA------>>>>>>>>>  "+p);
         try {
             if (respostaTexto.getId() == null) {
                 respostaTexto.setDadosresposta(objeto);
@@ -93,6 +92,15 @@ public class ControleResponder implements Serializable {
             tipo = Boolean.FALSE;
         };
         return tipo;
+    }
+    
+    public void responder(Integer id) {
+        try {
+            pergunta = daoPergunta.getObjectById(id);
+            editando = true;
+        } catch (Exception e) {
+            br.edu.ifsul.util.Util.mensagemErro("Erro ao recuperar objeto: " + br.edu.ifsul.util.Util.getMensagemErro(e));
+        }
     }
 
     public DadosRespostaDAO<DadosResposta> getDao() {

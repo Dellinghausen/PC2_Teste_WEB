@@ -7,40 +7,82 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="titulo">Responder</ui:define>
-        <ui:define name="conteudo">            
-            <h:form id='formListagem'>               
-                <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}" var="perguntas" id='listagem'>
-                    <p:column headerText="Pergunta">
-                                <div align="center"> 
-                                        <div class="p-grid p-dir-col">
-                                            <div class="p-col">
-                                                <p:outputLabel value="#{perguntas.pergunta}" style="margin-right: 30px"/> 
-                                                <p:commandButton value="Salvar"
-                                                     rendered="#{perguntas.tipo}"
-                                                     actionListener="#{controleResponder.salvarRespostaTexto(perguntas)}" 
-                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
-                                                     update=":formListagem" 
-                                                     icon="ui-icon-disk" />
-                                            </div>
-                                            <div class="p-col">
-                                                <p:inputTextarea value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150" rendered="#{perguntas.tipo}"/>
-                                               
-                                                <h:panelGrid columns="1" rendered="#{!perguntas.tipo}" style="margin-bottom:10px" cellpadding="5">
-                                                    <p:outputLabel for="escolha" value="Resposta:" />
-                                                    <p:selectOneRadio id="escolha" value="#{controleResponder.respostaEscolha.opcaoresposta}"  layout="grid" columns="3">
-                                                        <f:selectItems value="#{perguntas.opcaoResposta}" var="opcoes" itemLabel="#{opcoes}" itemValue="#{opcoes}"/>
-                                                    </p:selectOneRadio>
-                                                </h:panelGrid>
-                                                <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}"  var="perguntas" id='listagem'>
-
-                                                </p:dataTable>
-                                            </div>                                             
-                                        </div>                                     
-                                </div>
+        <ui:define name="conteudo">
+            <h:form id='formListagem'>              
+                <p:panelGrid columns="11">
+                    <p:outputLabel value="Ordem:"/>
+                    <p:selectOneMenu value='#{controleResponder.daoPergunta.ordem}'>
+                        <f:selectItem itemLabel="ID" itemValue="id"/>
+                        <f:selectItem itemLabel="Pergunta" itemValue="pergunta"/>
+                        <p:ajax update="listagem"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Filtro:"/>
+                    <p:inputText value='#{controleResponder.daoPergunta.filtro}' size='15'>
+                        <p:ajax update="listagem" event="keyup"/>
+                    </p:inputText>
+                    <p:commandButton value="Filtrar" update="listagem" icon="ui-icon-search"/>
+                    <p:outputLabel value="Resultados por página: "/>
+                    <p:inputNumber value='#{controleResponder.daoPergunta.maximoObjetos}' decimalPlaces="0" decimalSeparator="" thousandSeparator=""/>
+                    <p:commandButton value="Primeiro" actionListener="#{controleResponder.daoPergunta.primeiro()}" icon="ui-icon-seek-first" update="listagem"/>
+                    <p:commandButton value="Anterior" actionListener="#{controleResponder.daoPergunta.anterior()}" icon="ui-icon-seek-prev" update="listagem"/>
+                    <p:commandButton value="Proximo" actionListener="#{controleResponder.daoPergunta.proximo()}" icon="ui-icon-seek-next" update="listagem"/>
+                    <p:commandButton value="Ultimo" actionListener="#{controleResponder.daoPergunta.ultimo()}" icon="ui-icon-seek-end" update="listagem"/>
+                </p:panelGrid>
+                <p:dataTable value="#{controleResponder.pegaQuestionarioPorUser().pergunta}" var="pergunta" id='listagem'>
+                    <f:facet name="footer">
+                        <p:outputLabel value="#{controleResponder.daoPergunta.mensagemNavegacao}"/>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{pergunta.id}"/>
                     </p:column>
-                </p:dataTable>                        
+                    <p:column headerText="Nome">
+                        <p:outputLabel value="#{pergunta.pergunta}"/>
+                    </p:column>
+                    <p:column headerText="Ações">
+                        <div align="center">
+                            <p:commandButton actionListener="#{controleResponder.responder(pergunta.id)}"
+                                             icon="ui-icon-pencil" 
+                                             title="Editar" 
+                                             oncomplete="PF('dlg').show();" 
+                                             update="formEdicao"/>
+                            <p:commandButton icon="ui-icon-trash" actionListener="#{controleResponder.remover(pergunta.id)}" update="formListagem" title="Remover">
+                                <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <div align="center">
+                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </div>
+                            </p:confirmDialog>
+                        </div>
+                    </p:column>
+                </p:dataTable>
             </h:form>
-        </ui:define>        
+        </ui:define>
+        <ui:define name="dialogos">
+            <p:dialog widgetVar="dlg" header="Responder pergunta" modal="true" resizable="false">
+                <h:form id="formEdicao">
+                    <p:growl/>
+                    <div align="center">
+                        <p:panelGrid columns="2">
+                            <f:facet name="footer">
+                                <div align="center">
+                                    <p:commandButton value="Salvar"
+                                                     icon="ui-icon-disk"
+                                                     actionListener="#{controleResponder.salvarRespostaTexto(controleResponder.pergunta)}"
+                                                     oncomplete="if(!args.validationFailed){PF('dlg').hide();}"
+                                                     update=":formEdicao :formListagem"/>
+                                </div>
+                            </f:facet>
+                            <p:outputLabel value="Pergunta"/>
+                            <p:outputLabel value="#{controleResponder.pergunta.pergunta}"/>
+                            <p:outputLabel value="Resposta:" for="txtResposta"/>
+                            <p:inputTextarea id="txtResposta" value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150"/>                            
+                        </p:panelGrid>
+                    </div>
+                    <ui:include src="/templates/ajaxstatus.xhtml"/>
+                </h:form>
+            </p:dialog>
+        </ui:define>
     </ui:composition>
 </html>
-
