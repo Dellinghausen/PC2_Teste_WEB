@@ -90,13 +90,15 @@ public class ControleResponder implements Serializable {
             tipo = Boolean.TRUE;
         }else{
             tipo = Boolean.FALSE;
-        };
+        }
         return tipo;
     }
     
     public void responder(Integer id) {
+//        System.out.println("Dados id -----> " + objeto.getId());
         try {
             pergunta = daoPergunta.getObjectById(id);
+            respostaTexto = daoRespostaTexto.localizaPorAluno(objeto.getId(), id);
             editando = true;
         } catch (Exception e) {
             br.edu.ifsul.util.Util.mensagemErro("Erro ao recuperar objeto: " + br.edu.ifsul.util.Util.getMensagemErro(e));
