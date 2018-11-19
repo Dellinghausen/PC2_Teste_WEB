@@ -30,8 +30,10 @@ public class ControleDadosResposta implements Serializable {
     private Boolean editando;
     @EJB
     private EstudanteDAO<Estudante> daoEstudante;
+    private Estudante estudante;
     @EJB
     private QuestionarioDAO<Questionario> daoQuestionario;
+    private Questionario questionario;
     @EJB
     private RespostaTextoDAO<RespostaTexto> daoRespostaTexto;
     private RespostaTexto respostaTexto;
@@ -153,5 +155,21 @@ public class ControleDadosResposta implements Serializable {
 
     public void setRespostaEscolha(RespostaComEscolha respostaEscolha) {
         this.respostaEscolha = respostaEscolha;
+    }
+
+    public Estudante getEstudante() {
+        return estudante;
+    }
+
+    public void setEstudante(Estudante estudante) {
+        this.estudante = estudante;
+    }
+
+    public Questionario getQuestionario() {
+        return questionario;
+    }
+
+    public void setQuestionario(Questionario questionario) {
+        this.questionario = questionario;
     }
 }

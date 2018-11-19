@@ -45,15 +45,6 @@
                                              title="Editar" 
                                              oncomplete="PF('dlg').show();" 
                                              update="formEdicao"/>
-                            <p:commandButton icon="ui-icon-trash" actionListener="#{controleResponder.remover(pergunta.id)}" update="formListagem" title="Remover">
-                                <p:confirm header="Confirmação" message="Confirma a exclusão?" icon="ui-icon-alert"/>
-                            </p:commandButton>
-                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                                <div align="center">
-                                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-                                </div>
-                            </p:confirmDialog>
                         </div>
                     </p:column>
                 </p:dataTable>

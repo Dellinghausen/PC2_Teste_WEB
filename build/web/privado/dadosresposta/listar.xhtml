@@ -39,13 +39,11 @@
                         <p:outputLabel value="#{obj.id}"/>
                     </p:column>
                     <p:column headerText="Estudante">
-                        <p:outputLabel value="#{obj.estudante}">
-                        <f:converter binding="#{conversorEstudante}"/>
+                        <p:outputLabel value="#{obj.getEstudante().nome}">
                         </p:outputLabel>
                     </p:column>
                     <p:column headerText="Questionario">
-                        <p:outputLabel value="#{obj.questionario}">
-                        <f:converter binding="#{conversorQuestionario}"/>
+                        <p:outputLabel value="#{obj.getQuestionario().nome}">
                         </p:outputLabel>
                     </p:column>
                     <p:column headerText="Ações">

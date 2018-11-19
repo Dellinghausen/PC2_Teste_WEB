@@ -82,26 +82,12 @@
                                     <p:outputLabel value="ID"/>
                                     <p:inputText value="#{controlePergunta.objeto.id}" readonly="true" size="5"/>
                                     <p:outputLabel value="Pergunta" for="txtPergunta"/>
-                                    <p:inputTextarea id="txtPergunta" value="#{controlePergunta.objeto.pergunta}"/>
-                                    <p:outputLabel value="Quantidade de escolhas" for="txtQuantidade"/>
-                                    <p:inputText id="txtQuantidade" value="#{controlePergunta.objeto.quantidade_escolhas}" maxlength="1" size="2" type="number"/>
+                                    <p:inputTextarea id="txtPergunta" value="#{controlePergunta.objeto.pergunta}"/>                                    
                                     <p:outputLabel value="Informe se a pergunta é por extenso ou multipla escolha: " for="ativo"/>
                                     <p:selectOneRadio id="ativo" value="#{controlePergunta.objeto.tipo}">
                                         <f:selectItem itemLabel="Por extenso" itemValue="true" />
                                         <f:selectItem itemLabel="Multipla escolha" itemValue="false" />
                                     </p:selectOneRadio>
-                                    <p:outputLabel value="Categoria" for="selectCategoria"/>
-                                    <p:selectOneMenu id="selectCategoria" value="#{controlePergunta.objeto.categoria}">
-                                        <f:converter binding="#{conversorCategoria}"/>
-                                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
-                                        <f:selectItems value="#{controlePergunta.daoCategoria.listaTodos}" var="c" itemLabel="#{c.nome}"/>
-                                    </p:selectOneMenu>
-                                    <p:outputLabel value="Questionario" for="selectQuestionario"/>
-                                    <p:selectOneMenu id="selectQuestionario" value="#{controlePergunta.objeto.questionario}">
-                                        <f:converter binding="#{conversorQuestionario}"/>
-                                        <f:selectItem itemLabel="Selecione um registro" noSelectionOption="true"/>
-                                        <f:selectItems value="#{controlePergunta.daoQuestionario.listaTodos}" var="q" itemLabel="#{q.nome}"/>
-                                    </p:selectOneMenu>
                                 </p:panelGrid>
                             </div>
                         </p:tab>

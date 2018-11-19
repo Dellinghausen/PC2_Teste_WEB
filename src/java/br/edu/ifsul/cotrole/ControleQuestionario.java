@@ -1,7 +1,9 @@
 package br.edu.ifsul.cotrole;
 
+import br.edu.ifsul.dao.PerguntaDAO;
 import br.edu.ifsul.dao.QuestionarioDAO;
 import br.edu.ifsul.dao.UsuarioDAO;
+import br.edu.ifsul.modelo.Pergunta;
 import br.edu.ifsul.modelo.Questionario;
 import br.edu.ifsul.modelo.Usuario;
 import br.edu.ifsul.util.Util;
@@ -27,6 +29,9 @@ public class ControleQuestionario implements Serializable {
     private UsuarioDAO<Usuario> daoUsuario;
     @Inject
     private ControleLogin logado;
+    @EJB
+    private PerguntaDAO<Pergunta> daoPergunta;
+    private Pergunta pergunta;
 
     public ControleQuestionario() {
         editando = false;
@@ -34,6 +39,23 @@ public class ControleQuestionario implements Serializable {
 
     public String listar() {
         return "/privado/questionario/listar?faces-redirect=true";
+    }
+
+    public void adicionarPergunta() {
+        if (pergunta != null) {
+            if (!objeto.getPergunta().contains(pergunta)) {
+                objeto.getPergunta().add(pergunta);
+                Util.mensagemInformacao("Pergunta adicionado com sucesso!");
+            } else {
+                Util.mensagemErro("Esta pergunta já existe na sua lista!");
+            }
+        }
+    }
+
+    public void removerPergunta(int index) {
+        pergunta = objeto.getPergunta().get(index);
+        objeto.getPergunta().remove(pergunta);
+        Util.mensagemInformacao("Pergunta removida com sucesso!");
     }
 
     public void novo() {
@@ -111,5 +133,21 @@ public class ControleQuestionario implements Serializable {
 
     public void setLogado(ControleLogin logado) {
         this.logado = logado;
+    }
+
+    public PerguntaDAO<Pergunta> getDaoPergunta() {
+        return daoPergunta;
+    }
+
+    public void setDaoPergunta(PerguntaDAO<Pergunta> daoPergunta) {
+        this.daoPergunta = daoPergunta;
+    }
+
+    public Pergunta getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(Pergunta pergunta) {
+        this.pergunta = pergunta;
     }
 }
