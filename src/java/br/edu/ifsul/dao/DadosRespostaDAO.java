@@ -26,8 +26,12 @@ public class DadosRespostaDAO<TIPO> extends DAOGenerico<DadosResposta> implement
     }
 
     public DadosResposta localizaPorAluno(Object usuarioId) {
-        Query query = em.createQuery("from DadosResposta where estudante_id = "+usuarioId);
+        Query query = em.createQuery("from DadosResposta where estudante.id = " + usuarioId);
         DadosResposta obj = (DadosResposta) query.getSingleResult();
+        obj.getRespostaTexto().size();
+        obj.getRespostaEscolha().size();
+        obj.getQuestionario().getPergunta().size();
         return obj;
+
     }
 }
