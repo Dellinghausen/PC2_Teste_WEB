@@ -32,6 +32,7 @@ public class ControleQuestionario implements Serializable {
     @EJB
     private PerguntaDAO<Pergunta> daoPergunta;
     private Pergunta pergunta;
+    private Boolean novaPergunta;
 
     public ControleQuestionario() {
         editando = false;
@@ -52,9 +53,25 @@ public class ControleQuestionario implements Serializable {
         }
     }
 
-    public void removerPergunta(int index) {
+    public void novoPergunta() {
+        pergunta = new Pergunta();
+        novaPergunta = true;
+    }
+
+    public void alterarPergunta(int index) {
         pergunta = objeto.getPergunta().get(index);
-        objeto.getPergunta().remove(pergunta);
+        novaPergunta = false;
+    }
+
+    public void salvarPergunta() {
+        if (novaPergunta) {
+            objeto.adicionarPergunta(pergunta);
+        }
+        Util.mensagemInformacao("Pergunta persistida com sucesso!");
+    }
+
+    public void removerPergunta(int index) {
+        objeto.removerPergunta(index);
         Util.mensagemInformacao("Pergunta removida com sucesso!");
     }
 
