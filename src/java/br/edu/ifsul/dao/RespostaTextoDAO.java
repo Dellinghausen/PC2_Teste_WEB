@@ -17,7 +17,7 @@ public class RespostaTextoDAO<TIPO> extends DAOGenerico<RespostaTexto> implement
     }   
     
     public RespostaTexto localizaPorAluno(Object dadosId, Object perguntaId) {
-        Query query = em.createQuery("from respostatexto where dadosresposta_id = " + dadosId + " AND pergunta_id " + perguntaId);
+        Query query = em.createQuery("from RespostaTexto where dadosresposta.id = '" + dadosId + "' AND pergunta.id = '" + perguntaId + "'");
         RespostaTexto obj = (RespostaTexto) query.getSingleResult();
         return obj;
     }

@@ -95,10 +95,13 @@ public class ControleResponder implements Serializable {
     }
     
     public void responder(Integer id) {
-//        System.out.println("Dados id -----> " + objeto.getId());
         try {
             pergunta = daoPergunta.getObjectById(id);
             respostaTexto = daoRespostaTexto.localizaPorAluno(objeto.getId(), pergunta.getId());
+            if(respostaTexto == null){
+                respostaTexto = new RespostaTexto();
+                respostaTexto.setPergunta(pergunta);
+            }
             editando = true;
         } catch (Exception e) {
             br.edu.ifsul.util.Util.mensagemErro("Erro ao recuperar objeto: " + br.edu.ifsul.util.Util.getMensagemErro(e));
