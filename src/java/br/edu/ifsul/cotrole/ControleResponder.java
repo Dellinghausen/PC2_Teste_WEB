@@ -100,7 +100,7 @@ public class ControleResponder implements Serializable {
             respostaTexto = daoRespostaTexto.localizaPorAluno(objeto.getId(), pergunta.getId());
             if(respostaTexto == null){
                 respostaTexto = new RespostaTexto();
-                respostaTexto.setPergunta(pergunta);
+                respostaTexto.setPergunta(pergunta);                
             }
             editando = true;
         } catch (Exception e) {

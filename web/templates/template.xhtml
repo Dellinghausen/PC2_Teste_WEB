@@ -17,39 +17,39 @@
                 <h:form id="menu">
                     <p:megaMenu>
                         <p:menuitem value="Inicio" url="/index.xhtml" icon="ui-icon-home"/>
-                        <p:submenu label="Cadastros" rendered="#{controleLogin.usuarioAutenticado != null}">
+                        <p:submenu label="Adiministrativo" rendered="#{p:ifGranted('ADMINISTRATIVO')}">
                             <p:column>
                                 <p:submenu label="Pricipal">
                                     <p:menuitem action="#{controleUsuario.listar()}"
-                                                value="Manutenção de Usuarios"
+                                                value="Usuarios"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleEstudante.listar()}"
+                                                value="Estudantes"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleDadosResposta.listar()}"
+                                                value="Liberar Questionário"
+                                                ajax="false"/>
+                                    <p:menuitem action="#{controleQuestionario.listar()}"
+                                                value="Questionários/Perguntas"
                                                 ajax="false"/>
                                 </p:submenu>
                                 <p:submenu label="Básicos">
-                                    <p:menuitem action="#{controleEstudante.listar()}"
-                                                value="Manutenção de Estudantes"
-                                                ajax="false"/>
                                     <p:menuitem action="#{controleNecessidadeEspecial.listar()}"
-                                                value="Manutenção de Necessidade Especial"
-                                                ajax="false"/>
-                                    <p:menuitem action="#{controleQuestionario.listar()}"
-                                                value="Manutenção de Questionarios"
-                                                ajax="false"/>
-                                    <p:menuitem action="#{controleDadosResposta.listar()}"
-                                                value="Manutenção de Dados Resposta"
+                                                value="Necessidades Especiais"
                                                 ajax="false"/>
                                     <p:menuitem action="#{controleCidade.listar()}"
-                                                value="Manutenção de Cidades"
+                                                value="Cidades"
                                                 ajax="false"/>
                                     <p:menuitem action="#{controleEstado.listar()}"
-                                                value="Manutenção de Estados"
+                                                value="Estados"
                                                 ajax="false"/>
                                     <p:menuitem action="#{controlePais.listar()}"
-                                                value="Manutenção de Paises"
+                                                value="Países"
                                                 ajax="false"/>
                                 </p:submenu> 
                             </p:column>
-                        </p:submenu>
-                        <p:submenu label="Questionario" rendered="#{controleLogin.usuarioAutenticado != null}">  
+                        </p:submenu>                        
+                        <p:submenu label="Questionario" rendered="#{p:ifGranted('ALUNO')}">  
                             <p:column>  
                                 <p:submenu label="Responder">
                                     <p:menuitem value="Responder"

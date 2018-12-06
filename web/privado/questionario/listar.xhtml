@@ -149,7 +149,7 @@
                             <p:outputLabel value="ID"/>
                             <p:inputText value="#{controleQuestionario.pergunta.id}" readonly="true" size="5"/>
                             <p:outputLabel value="Pergunta" for="txtPergunta"/>
-                            <p:inputText id="txtPergunta" value="#{controleQuestionario.pergunta.pergunta}" size="40" maxlength="40"/>
+                            <p:inputTextarea id="txtPergunta" value="#{controleQuestionario.pergunta.pergunta}" maxlength="200" rows="2"/>
                             <p:outputLabel value="Informe se a pergunta é por extenso ou multipla escolha: " for="ativo"/>
                                     <p:selectOneRadio id="ativo" value="#{controleQuestionario.pergunta.tipo}">
                                         <f:selectItem itemLabel="Por extenso" itemValue="true" />

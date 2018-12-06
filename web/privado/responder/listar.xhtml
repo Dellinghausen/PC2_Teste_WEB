@@ -51,9 +51,8 @@
             </h:form>
         </ui:define>
         <ui:define name="dialogos">
-            <p:dialog widgetVar="dlg" header="Responder pergunta" modal="true" resizable="false">
+            <p:dialog widgetVar="dlg" header="Responder pergunta" modal="true" resizable="false" width="60%" height="100%" position="top">
                 <h:form id="formEdicao">
-                    <p:growl/>
                     <div align="center">
                         <p:panelGrid columns="2">
                             <f:facet name="footer">
@@ -68,7 +67,7 @@
                             <p:outputLabel value="Pergunta"/>
                             <p:outputLabel value="#{controleResponder.pergunta.pergunta}"/>
                             <p:outputLabel value="Resposta:" for="txtResposta"/>
-                            <p:inputTextarea id="txtResposta" value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="150"/>                            
+                            <p:inputTextarea id="txtResposta" value="#{controleResponder.respostaTexto.resposta}" rows="10" cols="85"/>                            
                         </p:panelGrid>
                     </div>
                     <ui:include src="/templates/ajaxstatus.xhtml"/>
